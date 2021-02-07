@@ -1,8 +1,21 @@
 package com.example.petproject.domain;
 
+import lombok.*;
+
+import javax.persistence.*;
 import java.util.Objects;
 
+@Builder
+@Getter
+@Setter
+@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "services")
 public class Service {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private String name;
   private double service_cost;
@@ -16,7 +29,7 @@ public class Service {
     this.name = name;
     this.service_cost = service_cost;
     this.child_friendly = child_friendly;
-    //DELETE LINKAGE TO PARKS AND ALL IT'S INSTANCES
+    //Parks aren't linked to Services
   }
 
   public Long getId() {

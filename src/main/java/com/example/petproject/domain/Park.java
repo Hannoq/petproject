@@ -1,9 +1,23 @@
 package com.example.petproject.domain;
 
+import lombok.*;
+
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
 
+@Builder
+@Getter
+@Setter
+@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "parks")
 public class Park {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private String name;
   private String parkType;
@@ -12,17 +26,9 @@ public class Park {
   private String cityName;
   private int employeesNumber;
 
-  public Park() {
-  }
+  //Use LAZY fetch type, EAGER is way too situational
 
-  public Park(Long id, String name, String parkType, LocalDate foundingDate, int square, String cityName, int employeesNumber) {
-    this.id = id;
-    this.name = name;
-    this.parkType = parkType;
-    this.foundingDate = foundingDate;
-    this.square = square;
-    this.cityName = cityName;
-    this.employeesNumber = employeesNumber;
+  public Park() {
   }
 
   public Long getId() {
@@ -81,12 +87,28 @@ public class Park {
     this.employeesNumber = employeesNumber;
   }
 
+  public Park(Long id, String name, String parkType, LocalDate foundingDate, int square, String cityName, int employeesNumber) {
+    this.id = id;
+    this.name = name;
+    this.parkType = parkType;
+    this.foundingDate = foundingDate;
+    this.square = square;
+    this.cityName = cityName;
+    this.employeesNumber = employeesNumber;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     Park park = (Park) o;
-    return square == park.square && employeesNumber == park.employeesNumber && id.equals(park.id) && Objects.equals(name, park.name) && Objects.equals(parkType, park.parkType) && Objects.equals(foundingDate, park.foundingDate) && Objects.equals(cityName, park.cityName);
+    return square == park.square &&
+            employeesNumber == park.employeesNumber &&
+            Objects.equals(id, park.id) &&
+            Objects.equals(name, park.name) &&
+            Objects.equals(parkType, park.parkType) &&
+            Objects.equals(foundingDate, park.foundingDate) &&
+            Objects.equals(cityName, park.cityName);
   }
 
   @Override

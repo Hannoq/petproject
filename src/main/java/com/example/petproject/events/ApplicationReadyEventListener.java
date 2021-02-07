@@ -29,7 +29,7 @@ public class ApplicationReadyEventListener {
 
   @EventListener(ApplicationReadyEvent.class)
   public void up(){
-    parkService.deletePark(42L);
+    parkService.delete(42L);
   }
 
 

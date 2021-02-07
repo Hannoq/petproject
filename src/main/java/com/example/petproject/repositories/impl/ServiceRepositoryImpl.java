@@ -1,8 +1,6 @@
 package com.example.petproject.repositories.impl;
 
 import com.example.petproject.domain.Service;
-import com.example.petproject.domain.Service;
-import com.example.petproject.repositories.ServiceRepository;
 import com.example.petproject.repositories.ServiceRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,8 +28,7 @@ public class ServiceRepositoryImpl implements ServiceRepository {
     this.jdbcTemplate = jdbcTemplate;
   }
 
-  @Override
-  public Optional<Service> getOne(Long id) {
+  public Optional<Service> get(Long id) {
     try {
       var service = jdbcTemplate.queryForObject("select * from parks where id = ?",
               SERVICE_BEAN_PROPERTY_ROW_MAPPER, id);
@@ -44,7 +41,7 @@ public class ServiceRepositoryImpl implements ServiceRepository {
 
   @Override
   public Optional<Service> create(Service service) {
-    LOGGER.debug("creating new Kitty with properties {}", service);
+    LOGGER.debug("creating new Service with properties {}", service);
     LOGGER.info("creating new service");
     KeyHolder keyHolder = new GeneratedKeyHolder();
     jdbcTemplate.update(connection -> {
@@ -56,7 +53,7 @@ public class ServiceRepositoryImpl implements ServiceRepository {
       return ps;
     }, keyHolder);
     long serviceId = keyHolder.getKey().longValue();
-    return getOne(serviceId);
+    return get(serviceId);
   }
 
   @Override
@@ -65,7 +62,7 @@ public class ServiceRepositoryImpl implements ServiceRepository {
                 + "service_cost = ?, "
                 + "where id = ?",
             service.getName(), service.getService_cost(), id);
-    return getOne(id);
+    return get(id);
   }
 
   @Override
